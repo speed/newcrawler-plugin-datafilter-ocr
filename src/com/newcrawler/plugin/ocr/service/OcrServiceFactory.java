@@ -1,18 +1,18 @@
 package com.newcrawler.plugin.ocr.service;
 
-import com.newcrawler.plugin.ocr.service.impl.OcrTdzywService;
+import com.newcrawler.plugin.ocr.service.impl.OcrServiceImpl;
 
 public class OcrServiceFactory {
 	
 
-	private static OcrService ocrTdzywService;
+	private static OcrService ocrService;
 	
 
-	public static OcrService getOcrTdzywService() {
-		if(ocrTdzywService==null){
-			ocrTdzywService=new OcrTdzywService();
+	public static OcrService getOcrService() {
+		if(ocrService==null){
+			ocrService=new OcrServiceImpl();
 		}
-		return ocrTdzywService;
+		return ocrService;
 	}
 	
 }

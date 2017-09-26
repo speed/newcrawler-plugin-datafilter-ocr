@@ -1,11 +1,11 @@
 package com.newcrawler.plugin.datafilter;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -22,7 +22,7 @@ public class DataFilterPluginService implements com.soso.plugin.DataFilterPlugin
 		Map<String, String> properties=dataFilterPluginBo.getProperties();
 		final String value=dataFilterPluginBo.getValue();
 		
-		OcrService ocrService=OcrServiceFactory.getOcrTdzywService();
+		OcrService ocrService=OcrServiceFactory.getOcrService();
 		if(StringUtils.isEmpty(value)){
 			return value;
 		}
@@ -38,10 +38,16 @@ public class DataFilterPluginService implements com.soso.plugin.DataFilterPlugin
 			return result;
 		}
 		
-		List<String> list=null;
+		
+		int border=1;
+		int clean=2;
+		int width=20;
+		int offest=3;
+		int rateFilter=80;
+		
 		try {
-			list = ocrService.readTemp(imageInByte);
-			result=ocrService.recognition(list,80);
+			ByteArrayInputStream bis = new ByteArrayInputStream(imageInByte);
+			result=ocrService.ocr(bis, border, clean, width, offest, rateFilter);
 			
 			if(StringUtils.isNotBlank(result)){
 				ocrService.save(properties, strMd5, result);
